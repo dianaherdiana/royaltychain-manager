@@ -21,6 +21,7 @@ import { Route as TransactionsRouteImport } from './routes/transactions'
 import { Route as VerificationRouteImport } from './routes/verification'
 import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as WorksRouteImport } from './routes/works'
+import { Route as WorksIndexRouteImport } from './routes/works.index'
 import { Route as WorksIdRouteImport } from './routes/works.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -83,6 +84,11 @@ const WorksRoute = WorksRouteImport.update({
   path: '/works',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WorksIndexRoute = WorksIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => WorksRoute,
+} as any)
 const WorksIdRoute = WorksIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/welcome': typeof WelcomeRoute
   '/works': typeof WorksRouteWithChildren
   '/works/$id': typeof WorksIdRoute
+  '/works/': typeof WorksIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -116,8 +123,8 @@ export interface FileRoutesByTo {
   '/transactions': typeof TransactionsRoute
   '/verification': typeof VerificationRoute
   '/welcome': typeof WelcomeRoute
-  '/works': typeof WorksRouteWithChildren
   '/works/$id': typeof WorksIdRoute
+  '/works': typeof WorksIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -134,6 +141,7 @@ export interface FileRoutesById {
   '/welcome': typeof WelcomeRoute
   '/works': typeof WorksRouteWithChildren
   '/works/$id': typeof WorksIdRoute
+  '/works/': typeof WorksIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -151,6 +159,7 @@ export interface FileRouteTypes {
     | '/welcome'
     | '/works'
     | '/works/$id'
+    | '/works/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -164,8 +173,8 @@ export interface FileRouteTypes {
     | '/transactions'
     | '/verification'
     | '/welcome'
-    | '/works'
     | '/works/$id'
+    | '/works'
   id:
     | '__root__'
     | '/'
@@ -181,6 +190,7 @@ export interface FileRouteTypes {
     | '/welcome'
     | '/works'
     | '/works/$id'
+    | '/works/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -284,6 +294,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/works/': {
+      id: '/works/'
+      path: '/'
+      fullPath: '/works/'
+      preLoaderRoute: typeof WorksIndexRouteImport
+      parentRoute: typeof WorksRoute
+    }
     '/works/$id': {
       id: '/works/$id'
       path: '/$id'
@@ -296,10 +313,12 @@ declare module '@tanstack/react-router' {
 
 interface WorksRouteChildren {
   WorksIdRoute: typeof WorksIdRoute
+  WorksIndexRoute: typeof WorksIndexRoute
 }
 
 const WorksRouteChildren: WorksRouteChildren = {
   WorksIdRoute: WorksIdRoute,
+  WorksIndexRoute: WorksIndexRoute,
 }
 
 const WorksRouteWithChildren = WorksRoute._addFileChildren(WorksRouteChildren)
