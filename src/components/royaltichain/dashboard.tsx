@@ -1,0 +1,198 @@
+import { useState } from "react";
+import { Link } from "@tanstack/react-router";
+import {
+  Images,
+  ShoppingBag,
+  CircleDollarSign,
+  FileCheck2,
+  Plus,
+  ArrowRight,
+  ArrowUpRight,
+  ChevronDown,
+  CalendarDays,
+  ShieldCheck,
+  Sparkles,
+  Hand,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useDemo } from "./demo-provider";
+import { StatCard, PageHeading, ArtworkCard, DataTable, StatusBadge } from "./ui";
+import { RoyaltyChart } from "./chart";
+import { transactions, shortDate } from "@/lib/demo-data";
+export function DashboardPage() {
+  const { works } = useDemo();
+  const [period, setPeriod] = useState("6");
+  return (
+    <>
+      <PageHeading
+        title={
+          <>
+            Good morning, Creator <Hand className="greeting-hand" size={25} />
+          </>
+        }
+        subtitle="Manage your digital works, licenses, and royalty activity."
+        action={
+          <Button asChild>
+            <Link to="/register">
+              <Plus size={17} />
+              Register New Work
+            </Link>
+          </Button>
+        }
+      />
+      <div className="stats-grid">
+        <StatCard
+          label="Total Works"
+          value={String(12 + works.length - 4)}
+          change="2 new works"
+          icon={Images}
+        />
+        <StatCard label="NFT Sales" value="28" change="16.7%" icon={ShoppingBag} tone="blue" />
+        <StatCard
+          label="Total Royalty"
+          value="2.45 ETH"
+          change="24.8%"
+          icon={CircleDollarSign}
+          tone="green"
+        />
+        <StatCard
+          label="Active Licenses"
+          value={String(8 + works.filter((w) => w.status === "ACTIVE").length - 2)}
+          change="2 new licenses"
+          icon={FileCheck2}
+          tone="amber"
+        />
+      </div>
+      <div className="overview-grid">
+        <section className="panel overview-panel">
+          <div className="panel-heading">
+            <div>
+              <h2>Royalty Overview</h2>
+              <p>Your earnings over time</p>
+            </div>
+            <select
+              className="compact-select"
+              aria-label="Royalty period"
+              value={period}
+              onChange={(e) => setPeriod(e.target.value)}
+            >
+              <option value="6">Last 6 months</option>
+              <option value="3">Last 3 months</option>
+            </select>
+          </div>
+          <div className="chart-summary">
+            <strong>
+              {period === "6" ? "2.45" : "1.79"} <span>ETH</span>
+            </strong>
+            <span className="growth">
+              <ArrowUpRight size={15} />
+              24.8% <span>vs. previous period</span>
+            </span>
+          </div>
+          <RoyaltyChart period={period} />
+        </section>
+        <section className="panel activity-panel">
+          <div className="panel-heading">
+            <div>
+              <h2>Recent Activity</h2>
+              <p>What's happening with your works</p>
+            </div>
+            <span className="activity-live" />
+          </div>
+          <div className="activity-list">
+            <div className="activity-item">
+              <span className="activity-icon tone-green">
+                <CircleDollarSign size={18} />
+              </span>
+              <div>
+                <h4>Royalty received</h4>
+                <p>
+                  Digital Sunset <span>+0.06 ETH</span>
+                </p>
+                <small>Today, 08:42 AM</small>
+              </div>
+            </div>
+            <div className="activity-item">
+              <span className="activity-icon tone-primary">
+                <FileCheck2 size={18} />
+              </span>
+              <div>
+                <h4>License activated</h4>
+                <p>Cyber Garden · Non-Exclusive</p>
+                <small>Oct 06, 2026</small>
+              </div>
+            </div>
+            <div className="activity-item">
+              <span className="activity-icon tone-blue">
+                <Images size={18} />
+              </span>
+              <div>
+                <h4>New artwork registered</h4>
+                <p>Pixel Dreams · Token #003</p>
+                <small>Oct 04, 2026</small>
+              </div>
+            </div>
+          </div>
+          <Link to="/transactions" className="activity-view">
+            View all activity <ArrowRight size={15} />
+          </Link>
+        </section>
+      </div>
+      <section className="section-block">
+        <div className="section-heading">
+          <div>
+            <h2>My Digital Works</h2>
+            <p>A little creativity. A lot of possibility.</p>
+          </div>
+          <Link to="/works" className="text-link">
+            View all works <ArrowRight size={16} />
+          </Link>
+        </div>
+        <div className="artwork-grid dashboard-artworks">
+          {works.slice(0, 4).map((work) => (
+            <ArtworkCard key={work.id} work={work} />
+          ))}
+        </div>
+      </section>
+      <section className="panel transactions-panel">
+        <div className="panel-heading">
+          <div>
+            <h2>Recent Transactions</h2>
+            <p>Your latest sales and royalty distributions</p>
+          </div>
+          <Link to="/transactions" className="text-link">
+            View all <ArrowRight size={15} />
+          </Link>
+        </div>
+        <DataTable headers={["Artwork", "Sale Price", "Royalty", "Date", "Status"]}>
+          {transactions.slice(0, 3).map((tx) => {
+            const work = works.find((w) => w.id === tx.workId);
+            return (
+              <tr key={tx.hash}>
+                <td>
+                  <Link to="/works/$id" params={{ id: tx.workId }} className="table-artwork">
+                    <img src={work?.image} alt="" width={36} height={36} />
+                    <span>{work?.title}</span>
+                  </Link>
+                </td>
+                <td className="strong-cell">{tx.price} ETH</td>
+                <td className="royalty-cell">
+                  {((tx.price * (work?.royalty || 5)) / 100).toFixed(3).replace(/0$/, "")} ETH
+                </td>
+                <td>{shortDate(tx.date)}</td>
+                <td>
+                  <StatusBadge status={tx.status} />
+                </td>
+              </tr>
+            );
+          })}
+        </DataTable>
+      </section>
+      <div className="trust-note">
+        <ShieldCheck size={16} />
+        <span>Your creative work. Your ownership. Transparent by design.</span>
+        <span className="trust-demo">Simulated blockchain data</span>
+      </div>
+    </>
+  );
+}

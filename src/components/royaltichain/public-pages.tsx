@@ -1,0 +1,200 @@
+import { Link } from "@tanstack/react-router";
+import {
+  ArrowRight,
+  ShieldCheck,
+  ImagePlus,
+  FileCheck2,
+  CircleDollarSign,
+  Blocks,
+  Check,
+  ArrowUpRight,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Navbar } from "./shell";
+import { initialWorks } from "@/lib/demo-data";
+const steps = [
+  {
+    icon: ImagePlus,
+    title: "Register Your Work",
+    description:
+      "Give your digital creation a unique NFT identity with clear ownership and metadata.",
+  },
+  {
+    icon: FileCheck2,
+    title: "Manage License",
+    description:
+      "Set usage rights, license dates, and royalty terms. Keep a transparent history of every change.",
+  },
+  {
+    icon: CircleDollarSign,
+    title: "Track Royalty",
+    description:
+      "Follow sales and creator royalties with a clear, automatic record of every distribution.",
+  },
+];
+export function WelcomePage() {
+  return (
+    <div className="public-page">
+      <Navbar />
+      <section className="welcome-hero">
+        <img
+          className="welcome-background"
+          src={initialWorks[0]?.image}
+          alt="Digital Sunset artwork"
+          width={1200}
+          height={800}
+        />
+        <div className="welcome-overlay" />
+        <div className="welcome-content">
+          <span className="welcome-eyebrow">
+            <Blocks size={15} /> YOUR CREATIVE WORK, CONNECTED
+          </span>
+          <h1>RoyaltiChain</h1>
+          <h2>
+            Manage Your Digital Works,
+            <br />
+            Licenses & Royalties
+          </h2>
+          <p>
+            Register digital artworks as NFTs, manage licensing information,
+            <br className="desktop-break" /> and track creator royalties transparently.
+          </p>
+          <div className="welcome-actions">
+            <Button asChild size="lg">
+              <Link to="/">
+                Get Started <ArrowRight />
+              </Link>
+            </Button>
+            <Button asChild variant="hero" size="lg">
+              <Link to="/verification">
+                <ShieldCheck />
+                Verify NFT
+              </Link>
+            </Button>
+          </div>
+          <span className="welcome-demo">
+            <Check size={15} />
+            Demo Mode · No real wallet required
+          </span>
+        </div>
+        <div className="hero-nft-stamp">
+          <ShieldCheck size={24} />
+          <div>
+            <strong>Digital Sunset</strong>
+            <span>Token #001 · License: ACTIVE · Royalty: 5%</span>
+          </div>
+          <span>Verified</span>
+        </div>
+      </section>
+      <section className="public-section">
+        <div className="public-section-title">
+          <span className="eyebrow">FROM CREATION TO COMPENSATION</span>
+          <h2>How It Works</h2>
+          <p>A simpler way to protect your work and follow its value.</p>
+        </div>
+        <div className="steps-grid">
+          {steps.map((s, i) => (
+            <article className="step-card" key={s.title}>
+              <div>
+                <span className="stat-icon tone-primary">
+                  <s.icon size={24} />
+                </span>
+                <span className="step-number">0{i + 1}</span>
+              </div>
+              <h3>{s.title}</h3>
+              <p>{s.description}</p>
+            </article>
+          ))}
+        </div>
+        <div className="prototype-title">
+          Prototype Sistem Lisensi dan Pelacakan Royalty Otomatis pada Karya Digital Berbasis NFT
+          dan Smart Contract.
+        </div>
+      </section>
+      <PublicFooter />
+    </div>
+  );
+}
+export function InformationPage({ features = false }: { features?: boolean }) {
+  const items = features
+    ? [
+        ...steps,
+        {
+          icon: ShieldCheck,
+          title: "Verify Digital Artwork",
+          description:
+            "Check token registration, ownership, license status, and royalty information in one place.",
+        },
+      ]
+    : steps;
+  return (
+    <div className="public-page">
+      <Navbar />
+      <section className="public-section information-page">
+        <span className="eyebrow">ROYALTICHAIN</span>
+        <h1>
+          {features
+            ? "A workspace for your creative rights."
+            : "From your first NFT to your next royalty."}
+        </h1>
+        <p className="information-subtitle">
+          {features
+            ? "Your works, licenses, and royalties — connected in one transparent workflow."
+            : "Register your artwork, choose its terms, and track its activity."}
+        </p>
+        <div className="steps-grid">
+          {items.map((s, i) => (
+            <article className="step-card" key={s.title}>
+              <div>
+                <span className="stat-icon tone-primary">
+                  <s.icon size={24} />
+                </span>
+                <span className="step-number">0{i + 1}</span>
+              </div>
+              <h3>{s.title}</h3>
+              <p>{s.description}</p>
+              <Button variant="link" asChild>
+                <Link
+                  to={
+                    i === 0
+                      ? "/register"
+                      : i === 1
+                        ? "/licenses"
+                        : i === 2
+                          ? "/royalty"
+                          : "/verification"
+                  }
+                >
+                  Explore in Demo Mode <ArrowUpRight />
+                </Link>
+              </Button>
+            </article>
+          ))}
+        </div>
+        <div className="public-cta">
+          <h2>Your work deserves clear ownership.</h2>
+          <Button asChild>
+            <Link to="/">
+              Open Demo Dashboard <ArrowRight />
+            </Link>
+          </Button>
+        </div>
+        <p className="muted-copy">
+          This is a prototype using fictional data. No real NFT minting, payment, or blockchain
+          verification takes place.
+        </p>
+      </section>
+      <PublicFooter />
+    </div>
+  );
+}
+function PublicFooter() {
+  return (
+    <footer className="public-footer">
+      <span>© 2026 RoyaltiChain · Creative ownership, made transparent.</span>
+      <Link to="/">
+        Enter Demo Mode <ArrowRight size={15} />
+      </Link>
+    </footer>
+  );
+}

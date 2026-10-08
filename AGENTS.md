@@ -8,3 +8,8 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Application architecture
+- Use TanStack file routes for all shareable RoyaltiChain screens with per-route head metadata, so navigation and direct links remain consistent.
+- Keep fictional prototype data and mutations in a shared in-memory React provider; no persistence or real wallet connection is implied.
+- Use shared presentation components and global semantic CSS tokens for all screens, so future data integrations do not duplicate UI logic.

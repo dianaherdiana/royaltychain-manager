@@ -10,33 +10,202 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FeaturesRouteImport } from './routes/features'
+import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as LicensesRouteImport } from './routes/licenses'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as RoyaltyRouteImport } from './routes/royalty'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as TransactionsRouteImport } from './routes/transactions'
+import { Route as VerificationRouteImport } from './routes/verification'
+import { Route as WelcomeRouteImport } from './routes/welcome'
+import { Route as WorksRouteImport } from './routes/works'
+import { Route as WorksIndexRouteImport } from './routes/works.index'
+import { Route as WorksIdRouteImport } from './routes/works.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FeaturesRoute = FeaturesRouteImport.update({
+  id: '/features',
+  path: '/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowItWorksRoute = HowItWorksRouteImport.update({
+  id: '/how-it-works',
+  path: '/how-it-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LicensesRoute = LicensesRouteImport.update({
+  id: '/licenses',
+  path: '/licenses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoyaltyRoute = RoyaltyRouteImport.update({
+  id: '/royalty',
+  path: '/royalty',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TransactionsRoute = TransactionsRouteImport.update({
+  id: '/transactions',
+  path: '/transactions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VerificationRoute = VerificationRouteImport.update({
+  id: '/verification',
+  path: '/verification',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WelcomeRoute = WelcomeRouteImport.update({
+  id: '/welcome',
+  path: '/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorksRoute = WorksRouteImport.update({
+  id: '/works',
+  path: '/works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorksIndexRoute = WorksIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => WorksRoute,
+} as any)
+const WorksIdRoute = WorksIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => WorksRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/features': typeof FeaturesRoute
+  '/how-it-works': typeof HowItWorksRoute
+  '/licenses': typeof LicensesRoute
+  '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
+  '/royalty': typeof RoyaltyRoute
+  '/settings': typeof SettingsRoute
+  '/transactions': typeof TransactionsRoute
+  '/verification': typeof VerificationRoute
+  '/welcome': typeof WelcomeRoute
+  '/works': typeof WorksRouteWithChildren
+  '/works/$id': typeof WorksIdRoute
+  '/works/': typeof WorksIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/features': typeof FeaturesRoute
+  '/how-it-works': typeof HowItWorksRoute
+  '/licenses': typeof LicensesRoute
+  '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
+  '/royalty': typeof RoyaltyRoute
+  '/settings': typeof SettingsRoute
+  '/transactions': typeof TransactionsRoute
+  '/verification': typeof VerificationRoute
+  '/welcome': typeof WelcomeRoute
+  '/works/$id': typeof WorksIdRoute
+  '/works': typeof WorksIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/features': typeof FeaturesRoute
+  '/how-it-works': typeof HowItWorksRoute
+  '/licenses': typeof LicensesRoute
+  '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
+  '/royalty': typeof RoyaltyRoute
+  '/settings': typeof SettingsRoute
+  '/transactions': typeof TransactionsRoute
+  '/verification': typeof VerificationRoute
+  '/welcome': typeof WelcomeRoute
+  '/works': typeof WorksRouteWithChildren
+  '/works/$id': typeof WorksIdRoute
+  '/works/': typeof WorksIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/features'
+    | '/how-it-works'
+    | '/licenses'
+    | '/profile'
+    | '/register'
+    | '/royalty'
+    | '/settings'
+    | '/transactions'
+    | '/verification'
+    | '/welcome'
+    | '/works'
+    | '/works/$id'
+    | '/works/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/features'
+    | '/how-it-works'
+    | '/licenses'
+    | '/profile'
+    | '/register'
+    | '/royalty'
+    | '/settings'
+    | '/transactions'
+    | '/verification'
+    | '/welcome'
+    | '/works/$id'
+    | '/works'
+  id:
+    | '__root__'
+    | '/'
+    | '/features'
+    | '/how-it-works'
+    | '/licenses'
+    | '/profile'
+    | '/register'
+    | '/royalty'
+    | '/settings'
+    | '/transactions'
+    | '/verification'
+    | '/welcome'
+    | '/works'
+    | '/works/$id'
+    | '/works/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FeaturesRoute: typeof FeaturesRoute
+  HowItWorksRoute: typeof HowItWorksRoute
+  LicensesRoute: typeof LicensesRoute
+  ProfileRoute: typeof ProfileRoute
+  RegisterRoute: typeof RegisterRoute
+  RoyaltyRoute: typeof RoyaltyRoute
+  SettingsRoute: typeof SettingsRoute
+  TransactionsRoute: typeof TransactionsRoute
+  VerificationRoute: typeof VerificationRoute
+  WelcomeRoute: typeof WelcomeRoute
+  WorksRoute: typeof WorksRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +217,125 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/features': {
+      id: '/features'
+      path: '/features'
+      fullPath: '/features'
+      preLoaderRoute: typeof FeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-it-works': {
+      id: '/how-it-works'
+      path: '/how-it-works'
+      fullPath: '/how-it-works'
+      preLoaderRoute: typeof HowItWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/licenses': {
+      id: '/licenses'
+      path: '/licenses'
+      fullPath: '/licenses'
+      preLoaderRoute: typeof LicensesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/royalty': {
+      id: '/royalty'
+      path: '/royalty'
+      fullPath: '/royalty'
+      preLoaderRoute: typeof RoyaltyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/transactions': {
+      id: '/transactions'
+      path: '/transactions'
+      fullPath: '/transactions'
+      preLoaderRoute: typeof TransactionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verification': {
+      id: '/verification'
+      path: '/verification'
+      fullPath: '/verification'
+      preLoaderRoute: typeof VerificationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/welcome': {
+      id: '/welcome'
+      path: '/welcome'
+      fullPath: '/welcome'
+      preLoaderRoute: typeof WelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/works': {
+      id: '/works'
+      path: '/works'
+      fullPath: '/works'
+      preLoaderRoute: typeof WorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/works/': {
+      id: '/works/'
+      path: '/'
+      fullPath: '/works/'
+      preLoaderRoute: typeof WorksIndexRouteImport
+      parentRoute: typeof WorksRoute
+    }
+    '/works/$id': {
+      id: '/works/$id'
+      path: '/$id'
+      fullPath: '/works/$id'
+      preLoaderRoute: typeof WorksIdRouteImport
+      parentRoute: typeof WorksRoute
+    }
   }
 }
 
+interface WorksRouteChildren {
+  WorksIdRoute: typeof WorksIdRoute
+  WorksIndexRoute: typeof WorksIndexRoute
+}
+
+const WorksRouteChildren: WorksRouteChildren = {
+  WorksIdRoute: WorksIdRoute,
+  WorksIndexRoute: WorksIndexRoute,
+}
+
+const WorksRouteWithChildren = WorksRoute._addFileChildren(WorksRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FeaturesRoute: FeaturesRoute,
+  HowItWorksRoute: HowItWorksRoute,
+  LicensesRoute: LicensesRoute,
+  ProfileRoute: ProfileRoute,
+  RegisterRoute: RegisterRoute,
+  RoyaltyRoute: RoyaltyRoute,
+  SettingsRoute: SettingsRoute,
+  TransactionsRoute: TransactionsRoute,
+  VerificationRoute: VerificationRoute,
+  WelcomeRoute: WelcomeRoute,
+  WorksRoute: WorksRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
