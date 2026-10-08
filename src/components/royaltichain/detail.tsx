@@ -1,9 +1,142 @@
-import { Link } from '@tanstack/react-router';
-import { ArrowLeft, ShieldCheck, Copy, Check, ArrowRight } from 'lucide-react';
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { useDemo } from './demo-provider';
-import { StatusBadge, Timeline, EmptyState } from './ui';
-import { creator, contract, transactions, shortDate } from '@/lib/demo-data';
-export function DetailPage({id}:{id:string}){const {works}=useDemo();const work=works.find(w=>w.id===id);const [copied,setCopied]=useState(false);if(!work)return <><Link to="/works" className="back-link"><ArrowLeft size={16}/>Back to My Works</Link><EmptyState title="Artwork not found" message="This token is not registered in the demo environment."/></>;
- return <><Link to="/works" className="back-link"><ArrowLeft size={16}/>Back to My Works</Link><div className="detail-grid"><div className="detail-artwork"><img src={work.image} alt={work.title} width={1000} height={800}/><div className="detail-image-caption"><span>{work.category}</span><span><ShieldCheck size={16}/>Demo NFT</span></div></div><section className="detail-main"><span className="eyebrow">DIGITAL COLLECTIBLE</span><h1>{work.title}</h1><p className="detail-description">{work.description}</p><div className="detail-token">Token #{work.id} <StatusBadge status={work.status}/></div><dl className="detail-list"><dt>Creator</dt><dd className="hash-text">{creator}</dd><dt>Owner</dt><dd className="hash-text">0x89EF...123A</dd><dt>License</dt><dd>{work.license}</dd><dt>License period</dt><dd>{work.start} → {work.end}</dd><dt>Royalty</dt><dd className="text-primary">{work.royalty}% on eligible resales</dd><dt>Verification</dt><dd><ShieldCheck size={15}/>Registration verified (demo)</dd><dt>Contract</dt><dd className="hash-text">0xAB12...91EF <Button variant="ghost" size="icon" aria-label="Copy contract address" title="Copy contract address" onClick={async()=>{await navigator.clipboard.writeText(contract);setCopied(true);setTimeout(()=>setCopied(false),2000);}}>{copied?<Check/>:<Copy/>}</Button></dd><dt>Metadata URI</dt><dd className="hash-text">demo://royaltichain/{work.id}</dd></dl><div className="detail-actions"><Button asChild><Link to="/licenses">Manage License <ArrowRight/></Link></Button><Button variant="outline" asChild><Link to="/verification"><ShieldCheck/>Verify NFT</Link></Button></div></section></div><div className="history-grid"><section className="panel history-panel"><h2>License History</h2><p className="muted-copy">Every change, preserved.</p><Timeline items={work.history}/></section><section className="panel history-panel"><h2>Transaction History</h2><p className="muted-copy">Sales and royalty distributions · Demo records</p><Timeline items={transactions.filter(t=>t.workId===id).flatMap(t=>[{title:`${t.status==='Completed'?'NFT sold':t.status==='Pending'?'Sale pending':'Sale failed'} · ${t.price} ETH`,date:shortDate(t.date)+', 2026',note:`Buyer ${t.buyer} · ${t.hash}`},...(t.status==='Completed'?[{title:`Royalty distributed · ${(t.price*work.royalty/100).toFixed(3)} ETH`,date:shortDate(t.date)+', 2026',note:`${work.royalty}% creator royalty · Simulated distribution`}]:[])])}/>{!transactions.some(t=>t.workId===id)&&<p className="muted-copy">No transactions yet.</p>}</section></div></>;}
+import { Link } from "@tanstack/react-router";
+import { ArrowLeft, ShieldCheck, Copy, Check, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useDemo } from "./demo-provider";
+import { StatusBadge, Timeline, EmptyState } from "./ui";
+import { creator, contract, transactions, shortDate } from "@/lib/demo-data";
+export function DetailPage({ id }: { id: string }) {
+  const { works } = useDemo();
+  const work = works.find((w) => w.id === id);
+  const [copied, setCopied] = useState(false);
+  if (!work)
+    return (
+      <>
+        <Link to="/works" className="back-link">
+          <ArrowLeft size={16} />
+          Back to My Works
+        </Link>
+        <EmptyState
+          title="Artwork not found"
+          message="This token is not registered in the demo environment."
+        />
+      </>
+    );
+  return (
+    <>
+      <Link to="/works" className="back-link">
+        <ArrowLeft size={16} />
+        Back to My Works
+      </Link>
+      <div className="detail-grid">
+        <div className="detail-artwork">
+          <img src={work.image} alt={work.title} width={1000} height={800} />
+          <div className="detail-image-caption">
+            <span>{work.category}</span>
+            <span>
+              <ShieldCheck size={16} />
+              Demo NFT
+            </span>
+          </div>
+        </div>
+        <section className="detail-main">
+          <span className="eyebrow">DIGITAL COLLECTIBLE</span>
+          <h1>{work.title}</h1>
+          <p className="detail-description">{work.description}</p>
+          <div className="detail-token">
+            Token #{work.id} <StatusBadge status={work.status} />
+          </div>
+          <dl className="detail-list">
+            <dt>Creator</dt>
+            <dd className="hash-text">{creator}</dd>
+            <dt>Owner</dt>
+            <dd className="hash-text">
+              {transactions.some((t) => t.workId === work.id && t.status === "Completed")
+                ? "0x89EF...123A"
+                : creator}
+            </dd>
+            <dt>License</dt>
+            <dd>{work.license}</dd>
+            <dt>License period</dt>
+            <dd>
+              {work.start} → {work.end}
+            </dd>
+            <dt>Royalty</dt>
+            <dd className="text-primary">{work.royalty}% on eligible resales</dd>
+            <dt>Verification</dt>
+            <dd>
+              <ShieldCheck size={15} />
+              Registration verified (demo)
+            </dd>
+            <dt>Contract</dt>
+            <dd className="hash-text">
+              0xAB12...91EF{" "}
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="Copy contract address"
+                title="Copy contract address"
+                onClick={async () => {
+                  await navigator.clipboard.writeText(contract);
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 2000);
+                }}
+              >
+                {copied ? <Check /> : <Copy />}
+              </Button>
+            </dd>
+            <dt>Metadata URI</dt>
+            <dd className="hash-text">demo://royaltichain/{work.id}</dd>
+          </dl>
+          <div className="detail-actions">
+            <Button asChild>
+              <Link to="/licenses">
+                Manage License <ArrowRight />
+              </Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link to="/verification">
+                <ShieldCheck />
+                Verify NFT
+              </Link>
+            </Button>
+          </div>
+        </section>
+      </div>
+      <div className="history-grid">
+        <section className="panel history-panel">
+          <h2>License History</h2>
+          <p className="muted-copy">Every change, preserved.</p>
+          <Timeline items={work.history} />
+        </section>
+        <section className="panel history-panel">
+          <h2>Transaction History</h2>
+          <p className="muted-copy">Sales and royalty distributions · Demo records</p>
+          <Timeline
+            items={transactions
+              .filter((t) => t.workId === id)
+              .flatMap((t) => [
+                {
+                  title: `${t.status === "Completed" ? "NFT sold" : t.status === "Pending" ? "Sale pending" : "Sale failed"} · ${t.price} ETH`,
+                  date: shortDate(t.date) + ", 2026",
+                  note: `Buyer ${t.buyer} · ${t.hash}`,
+                },
+                ...(t.status === "Completed"
+                  ? [
+                      {
+                        title: `Royalty distributed · ${((t.price * work.royalty) / 100).toFixed(3)} ETH`,
+                        date: shortDate(t.date) + ", 2026",
+                        note: `${work.royalty}% creator royalty · Simulated distribution`,
+                      },
+                    ]
+                  : []),
+              ])}
+          />
+          {!transactions.some((t) => t.workId === id) && (
+            <p className="muted-copy">No transactions yet.</p>
+          )}
+        </section>
+      </div>
+    </>
+  );
+}
