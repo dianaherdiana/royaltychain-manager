@@ -1,3 +1,4 @@
+import type React from "react";
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { initialWorks, type Work } from "@/lib/demo-data";
 type DemoContextValue = {
@@ -7,7 +8,9 @@ type DemoContextValue = {
   connected: boolean;
   setConnected: (value: boolean) => void;
 };
-const DemoContext = createContext<DemoContextValue | null>(null);
+const globalKey = "__royaltichain_demo_context__";
+const g = globalThis as unknown as Record<string, React.Context<DemoContextValue | null> | undefined>;
+const DemoContext = g[globalKey] ?? (g[globalKey] = createContext<DemoContextValue | null>(null));
 export function DemoProvider({ children }: { children: ReactNode }) {
   const [works, setWorks] = useState<Work[]>(initialWorks);
   const [connected, setConnected] = useState(false);
@@ -32,8 +35,18 @@ export function DemoProvider({ children }: { children: ReactNode }) {
     </DemoContext.Provider>
   );
 }
+const fallback: DemoContextValue = {
+  works: initialWorks,
+  addWork: () => {},
+  updateWork: () => {},
+  connected: false,
+  setConnected: () => {},
+};
 export function useDemo() {
   const value = useContext(DemoContext);
-  if (!value) throw new Error("Demo provider required");
+  if (!value) {
+    console.warn("RoyaltiChain demo data unavailable; using read-only fallback.");
+    return fallback;
+  }
   return value;
 }
