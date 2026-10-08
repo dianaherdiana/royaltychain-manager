@@ -35,8 +35,18 @@ export function DemoProvider({ children }: { children: ReactNode }) {
     </DemoContext.Provider>
   );
 }
+const fallback: DemoContextValue = {
+  works: initialWorks,
+  addWork: () => {},
+  updateWork: () => {},
+  connected: false,
+  setConnected: () => {},
+};
 export function useDemo() {
   const value = useContext(DemoContext);
-  if (!value) throw new Error("Demo provider required");
+  if (!value) {
+    console.warn("RoyaltiChain demo data unavailable; using read-only fallback.");
+    return fallback;
+  }
   return value;
 }
