@@ -32,15 +32,18 @@
 }
 :root {
   --radius: 0.875rem;
-  --background: oklch(0.983 0.002 260);
+  --background: oklch(0.971 0.012 272);
+  --canvas-top: oklch(0.957 0.022 278);
+  --canvas-glow: oklch(0.925 0.055 285);
+  --canvas-deep: oklch(0.945 0.03 268);
   --foreground: oklch(0.27 0.025 265);
   --card: oklch(1 0 0);
   --primary: oklch(0.54 0.215 283);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.955 0.023 285);
-  --muted: oklch(0.965 0.003 260);
+  --muted: oklch(0.963 0.011 272);
   --muted-foreground: oklch(0.58 0.018 260);
-  --border: oklch(0.928 0.007 265);
+  --border: oklch(0.918 0.016 272);
   --sidebar: oklch(0.205 0.037 270);
   --sidebar-text: oklch(0.73 0.026 265);
   --sidebar-strong: oklch(0.98 0.004 260);
@@ -66,7 +69,26 @@
   }
   body {
     margin: 0;
-    background: var(--background);
+    background-color: var(--background);
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        color-mix(in oklch, var(--primary) 4%, transparent) 0 1px,
+        transparent 1px 72px
+      ),
+      radial-gradient(
+        1100px 620px at 88% -14%,
+        color-mix(in oklch, var(--canvas-glow) 62%, transparent),
+        transparent 66%
+      ),
+      radial-gradient(
+        880px 520px at -12% 6%,
+        color-mix(in oklch, var(--blue) 17%, transparent),
+        transparent 70%
+      ),
+      linear-gradient(180deg, var(--canvas-top), var(--background) 44%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     color: var(--foreground);
     font-family: var(--font-sans);
     font-size: 13px;
@@ -299,7 +321,8 @@
 .topbar {
   height: 77px;
   border-bottom: 1px solid var(--border);
-  background: var(--card);
+  background: color-mix(in oklch, var(--card) 76%, transparent);
+  backdrop-filter: blur(14px) saturate(1.2);
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
