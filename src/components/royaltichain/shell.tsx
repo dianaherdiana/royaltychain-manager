@@ -23,6 +23,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Modal } from "./ui";
 import { useDemo } from "./demo-provider";
+import { SolanaWalletButton } from "./solana-wallet-loader";
 const nav = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
   { to: "/works", label: "My Works", icon: Images },
@@ -45,56 +46,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
   );
 }
 export function WalletButton() {
-  const { connected, setConnected } = useDemo();
-  const [open, setOpen] = useState(false);
-  return (
-    <>
-      <Button variant="outline" className="wallet-button" onClick={() => setOpen(true)}>
-        <Wallet size={16} />
-        <span>{connected ? "0x12A4...89BC" : "Connect Wallet"}</span>
-      </Button>
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        title={connected ? "Demo wallet connected" : "Connect your demo wallet"}
-        description="No real wallet or blockchain connection is required."
-      >
-        <div className="wallet-demo-option">
-          <span className="stat-icon tone-primary">
-            <Wallet size={24} />
-          </span>
-          <div>
-            <h3>RoyaltiChain Demo Wallet</h3>
-            <p>Fictional address · 0x12A4...89BC</p>
-          </div>
-          <span className="demo-label">Demo</span>
-        </div>
-        <p className="muted-copy">
-          All NFT registrations, licenses, and transactions in this prototype are simulated. No
-          funds will be requested.
-        </p>
-        <Button
-          className="w-full"
-          onClick={() => {
-            setConnected(!connected);
-            setOpen(false);
-          }}
-        >
-          {connected ? (
-            <>
-              <LogOut />
-              Disconnect demo wallet
-            </>
-          ) : (
-            <>
-              <Check />
-              Use Demo Wallet
-            </>
-          )}
-        </Button>
-      </Modal>
-    </>
-  );
+  return <SolanaWalletButton />;
 }
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });

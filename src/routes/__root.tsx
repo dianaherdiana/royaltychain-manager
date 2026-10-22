@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { DemoProvider } from "@/components/royaltichain/demo-provider";
 import { AppShell } from "@/components/royaltichain/shell";
+import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -131,6 +132,7 @@ function RootComponent() {
           <Outlet />
         </AppShell>
       </DemoProvider>
+      <Toaster />
     </QueryClientProvider>
   );
 }
