@@ -11,5 +11,6 @@
 
 ## Application architecture
 - Use TanStack file routes for all shareable RoyaltiChain screens with per-route head metadata, so navigation and direct links remain consistent.
-- Keep fictional prototype data and mutations in a shared in-memory React provider; no persistence or real wallet connection is implied.
+- Keep fictional NFT prototype data and mutations in a shared in-memory React provider, separate from actual Solana Devnet wallet transfers.
+- Load Solana wallet adapters in a lazy browser-only wallet island; never mix Devnet transfers with fictional NFT records or send to Mainnet.
 - Use shared presentation components and global semantic CSS tokens for all screens, so future data integrations do not duplicate UI logic.

@@ -1,5 +1,6 @@
 @import "tailwindcss" source(none);
 @import "tw-animate-css";
+@import "@solana/wallet-adapter-react-ui/styles.css";
 @source "../src";
 @custom-variant dark (&:is(.dark *));
 @theme inline {
@@ -2896,4 +2897,35 @@ tr:last-child td {
   vertical-align: -3px;
   color: var(--warning);
   margin-left: 3px;
+}
+.devnet-badge {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  padding: 3px 6px;
+  border-radius: 5px;
+  color: var(--success);
+  background: var(--success-bg);
+  font-size: 10px;
+  font-weight: 650;
+}
+.solana-wallet-button { height: auto; min-height: 42px; gap: 8px; }
+.wallet-identity { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.4; }
+.wallet-identity small { color: var(--muted-foreground); font-size: 10px; }
+.solana-account { display: flex; gap: 12px; align-items: center; padding: 14px 0; border-block: 1px solid var(--border); }
+.solana-account > div { flex: 1; }
+.solana-transfer-form { display: flex; flex-direction: column; gap: 16px; padding-block: 8px; }
+.solana-transfer-form label { display: flex; flex-direction: column; gap: 7px; font-weight: 500; }
+.solana-transfer-form input { min-height: 42px; font-weight: 400; }
+.solana-tx-link { display: flex; align-items: center; gap: 8px; color: var(--primary); overflow-wrap: anywhere; }
+.wallet-adapter-modal-wrapper { background: var(--card); color: var(--foreground); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-popover); }
+.wallet-adapter-modal-title, .wallet-adapter-button, .wallet-adapter-modal-list-more { color: var(--foreground); font-family: var(--font-sans); }
+.wallet-adapter-modal-button-close { background: var(--muted); }
+.wallet-adapter-modal-button-close svg { fill: var(--muted-foreground); }
+.wallet-adapter-modal-list .wallet-adapter-button:hover { background: var(--secondary); }
+.wallet-adapter-modal-overlay { background: color-mix(in oklch, var(--sidebar) 65%, transparent); }
+@media (max-width: 600px) {
+  .solana-wallet-button { padding-inline: 8px; gap: 5px; font-size: 10px; }
+  .solana-wallet-button > svg { width: 14px; }
+  .devnet-badge { font-size: 9px; padding-inline: 4px; }
 }
